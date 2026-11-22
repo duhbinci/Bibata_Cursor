@@ -19,6 +19,7 @@ jobs:
     runs-on: "ubuntu-latest"
     env:
       THEMES: Amethyst
+      PUPPETEER_SKIP_DOWNLOAD: "true"
 
     steps:
       - uses: actions/checkout@v4
