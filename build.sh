@@ -44,6 +44,10 @@ names["Bibata-Original-Classic"]=$(with_version "Black and sharp edge Bibata")
 names["Bibata-Original-Classic-Right"]=$(with_version "Black and sharp edge right-hand Bibata")
 names["Bibata-Original-Ice"]=$(with_version "White and sharp edge Bibata")
 names["Bibata-Original-Ice-Right"]=$(with_version "White and sharp edge right-hand Bibata")
+names["Bibata-Modern-Amethyst"]=$(with_version "Purple and rounded edge Bibata")
+names["Bibata-Modern-Amethyst-Right"]=$(with_version "Purple and rounded edge right-hand Bibata")
+names["Bibata-Original-Amethyst"]=$(with_version "Purple and sharp edge Bibata")
+names["Bibata-Original-Amethyst-Right"]=$(with_version "Purple and sharp edge right-hand Bibata")
 
 # Cleanup old builds
 rm -rf themes bin
