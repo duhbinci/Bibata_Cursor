@@ -49,56 +49,42 @@ names["Bibata-Modern-Amethyst-Right"]=$(with_version "Purple and rounded edge ri
 names["Bibata-Original-Amethyst"]=$(with_version "Purple and sharp edge Bibata")
 names["Bibata-Original-Amethyst-Right"]=$(with_version "Purple and sharp edge right-hand Bibata")
 
+# Run up to $JOBS background jobs at once (defaults to CPU count)
+JOBS="${JOBS:-$(nproc 2>/dev/null || echo 4)}"
+throttle() {
+  while (($(jobs -rp | wc -l) >= JOBS)); do wait -n; done
+}
+export XZ_OPT="-T0"
+
 # Cleanup old builds
 rm -rf themes bin
 
-# Building Bibata XCursor binaries
+# Building Bibata XCursor + Windows binaries in parallel
 for key in "${!names[@]}"; do
   comment="${names[$key]}"
   cfg_path=$(get_config_path "$key")
 
-  ctgen "$cfg_path/x.build.toml" -p x11 -d "bitmaps/$key" -n "$key" -c "$comment XCursors" &
-  PID=$!
-  wait $PID
+  throttle; ctgen "$cfg_path/x.build.toml" -p x11 -d "bitmaps/$key" -n "$key" -c "$comment XCursors" &
+  throttle; ctgen "$cfg_path/win_rg.build.toml" -d "bitmaps/$key" -n "$key-Regular" -c "$comment Windows Cursors" &
+  throttle; ctgen "$cfg_path/win_lg.build.toml" -d "bitmaps/$key" -n "$key-Large" -c "$comment Windows Cursors" &
+  throttle; ctgen "$cfg_path/win_xl.build.toml" -d "bitmaps/$key" -n "$key-Extra-Large" -c "$comment Windows Cursors" &
 done
-
-# Building Bibata Windows binaries
-for key in "${!names[@]}"; do
-  comment="${names[$key]}"
-  cfg_path=$(get_config_path "$key")
-
-  ctgen "$cfg_path/win_rg.build.toml" -d "bitmaps/$key" -n "$key-Regular" -c "$comment Windows Cursors" &
-  ctgen "$cfg_path/win_lg.build.toml" -d "bitmaps/$key" -n "$key-Large" -c "$comment Windows Cursors" &
-  ctgen "$cfg_path/win_xl.build.toml" -d "bitmaps/$key" -n "$key-Extra-Large" -c "$comment Windows Cursors" &
-  PID=$!
-  wait $PID
-done
+wait
 
 # Compressing Binaries
 mkdir -p bin
 cd themes || exit
-
-for key in "${!names[@]}"; do
-  tar -cJvf "../bin/${key}.tar.xz" "${key}" &
-  PID=$!
-  wait $PID
-done
-
-# Compressing Bibata.tar.xz
 cp ../LICENSE .
-tar -cJvf "../bin/Bibata.tar.xz" --exclude="*-Windows" . &
-PID=$!
-wait $PID
 
-# Compressing Bibata-*-Windows
 for key in "${!names[@]}"; do
-  zip -rv "../bin/${key}-Windows.zip" "${key}-Small-Windows" "${key}-Regular-Windows" "${key}-Large-Windows" "${key}-Extra-Large-Windows" &
-  PID=$!
-  wait $PID
+  throttle; tar -cJf "../bin/${key}.tar.xz" "${key}" &
+  throttle; zip -rq "../bin/${key}-Windows.zip" "${key}-Small-Windows" "${key}-Regular-Windows" "${key}-Large-Windows" "${key}-Extra-Large-Windows" &
 done
+throttle; tar -cJf "../bin/Bibata.tar.xz" --exclude="*-Windows" . &
+wait
 
 cd ..
 
 # Copying License File for 'bitmaps'
 cp LICENSE bitmaps/
-zip -rv bin/bitmaps.zip bitmaps
+zip -rq bin/bitmaps.zip bitmaps

@@ -5,8 +5,8 @@
   },
   "scripts": {
     "clean": "rm -rf bin bitmaps themes",
-    "render": "npx cbmp render.json",
+    "render": "node scripts/render.mjs",
     "build": "bash build.sh",
-    "generate": "npx cbmp render.json && bash build.sh"
+    "generate": "node scripts/render.mjs && bash build.sh"
   }
 }
