@@ -221,15 +221,15 @@
     "colors": [
       {
         "match": "#00FF00",
-        "replace": "#7C3AED"
+        "replace": "#A277FF"
       },
       {
         "match": "#0000FF",
-        "replace": "#FFFFFF"
+        "replace": "#EDECEE"
       },
       {
         "match": "#FF0000",
-        "replace": "#1E0B3A"
+        "replace": "#15141B"
       }
     ]
   },
@@ -239,15 +239,15 @@
     "colors": [
       {
         "match": "#00FF00",
-        "replace": "#7C3AED"
+        "replace": "#A277FF"
       },
       {
         "match": "#0000FF",
-        "replace": "#FFFFFF"
+        "replace": "#EDECEE"
       },
       {
         "match": "#FF0000",
-        "replace": "#1E0B3A"
+        "replace": "#15141B"
       }
     ]
   },
@@ -257,15 +257,15 @@
     "colors": [
       {
         "match": "#00FF00",
-        "replace": "#7C3AED"
+        "replace": "#A277FF"
       },
       {
         "match": "#0000FF",
-        "replace": "#FFFFFF"
+        "replace": "#EDECEE"
       },
       {
         "match": "#FF0000",
-        "replace": "#1E0B3A"
+        "replace": "#15141B"
       }
     ]
   },
@@ -275,15 +275,15 @@
     "colors": [
       {
         "match": "#00FF00",
-        "replace": "#7C3AED"
+        "replace": "#A277FF"
       },
       {
         "match": "#0000FF",
-        "replace": "#FFFFFF"
+        "replace": "#EDECEE"
       },
       {
         "match": "#FF0000",
-        "replace": "#1E0B3A"
+        "replace": "#15141B"
       }
     ]
   }
