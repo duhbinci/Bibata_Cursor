@@ -10,7 +10,8 @@ const bin = join(process.cwd(), "node_modules", "cbmp", "bin", "cbmp.js");
 const config = JSON.parse(readFileSync("render.json", "utf8"));
 const jobs = Number(process.env.JOBS) || availableParallelism();
 const tmp = mkdtempSync(join(tmpdir(), "cbmp-"));
-const keys = Object.keys(config);
+const filter = process.env.THEMES ? new RegExp(process.env.THEMES) : null;
+const keys = Object.keys(config).filter((k) => !filter || filter.test(k));
 
 const run = (key) =>
   new Promise((done, reject) => {

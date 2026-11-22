@@ -56,6 +56,13 @@ throttle() {
 }
 export XZ_OPT="-T0"
 
+# Optional theme filter (regex), e.g. THEMES=Amethyst
+if [[ -n "$THEMES" ]]; then
+  for key in "${!names[@]}"; do
+    [[ $key =~ $THEMES ]] || unset "names[$key]"
+  done
+fi
+
 # Cleanup old builds
 rm -rf themes bin
 
